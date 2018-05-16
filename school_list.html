@@ -1,0 +1,359 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+
+  <style type="text/css">
+  .resort {
+    padding: 10px;
+    border: 1px solid black;
+    background: #ccc;
+    cursor: pointer;
+    width: 100px;
+    margin-bottom: 20px;
+  }
+
+  .slider-container{
+    width: 40vw;
+  }
+
+  .slider {
+      -webkit-appearance: none;
+      width: 60%;
+      height: 15px;
+      border-radius: 5px;
+      background: #d3d3d3;
+      outline: none;
+      opacity: 0.7;
+      -webkit-transition: .2s;
+      transition: opacity .2s;
+  }
+
+  .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: #4CAF50;
+      cursor: pointer;
+  }
+
+  .slider:hover {
+      opacity: 1; /* Fully shown on mouse-over */
+  }
+
+  #college-search .college{
+    flex-direction: row;
+    display: inline-flex;
+    border: 3px solid black;
+    height: 12vw;
+    width: 30%;
+    margin: 10px;
+  }
+  #college-search .college img{
+    height: 100%;
+    width: 40%;
+    object-fit: none;
+  }
+
+  .college text {
+
+  }
+  </style>
+  <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+
+  <div id="college-search" class="description">
+    <div class="sub-title">College Choice</div>
+    <div class="sub-text">
+      So what colleges, then, should aspiring students be looking for? That's going to depend on the values of each individual. Below is list of the top 50 colleges by attribute.
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+  <script src="lodash.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+  <script type="text/javascript">
+
+  $(document).ready(function () {
+
+
+
+
+    var allData;
+    d3.csv("merged_data_v3.csv")
+    .get(function (error, data) {
+
+      //check for errors
+      if (error) {
+        console.log(error);
+      }
+
+      //parse rows with numbers
+
+      var variables = data.columns;
+
+      for (var i = 0; i < data.length; i++) {
+        variables.forEach(function (d) {
+          if (!isNaN(data[i][d])) {
+            data[i][d] = Number(data[i][d]);
+          }
+
+        })
+      }
+      allData = data;
+
+      //remove empty rows/rows that don't have diversity metrics
+      data = data.filter(function (d) {
+
+
+        if ((d.Year != 2015 && d.Year != "") || d.UgdsBlack == "") {
+          return false;
+        }
+        return true;
+
+      });
+      render(data)
+    }); //end of csv reading
+
+function sort_and_filter(data, field){
+  dat = data.filter(function (d) {
+    if (d.UgdsWomen == "") {
+      return false;
+    }
+    if (+d.UgdsWomen < 0.5) {
+      return false;
+    }
+    return true;
+
+  });
+  console.log(dat);
+  return _.orderBy(dat, 'UgdsWhite', 'asc')
+}
+
+function sort_and_filter2(data, field){
+  dat = data.filter(function (d) {
+    if (d.UgdsWhite == "") {
+      return false;
+    }
+    if (+d.UgdsWhite > 0.5) {
+      return false;
+    }
+    return true;
+
+  });
+  console.log(dat);
+  return _.orderBy(dat, 'UgdsWhite', 'desc')
+}
+
+
+function render(data){
+  //loadFilters();
+  loadButtons(data);
+  clearList();
+  loadList(sort_and_filter(data).slice(0, 50));
+
+}
+
+function clearList(){
+  d3.selectAll("div.college").remove();
+}
+
+// Modified from https://github.com/evoluteur/d3-dual-range-slider/blob/master/js/slider.js
+function addFilter(data, min, max){
+  var sliderVals=[min, max];
+  var width = 400;
+
+  var x = d3.scaleLinear()
+      .domain([min, max])
+      .range([0, width])
+      .clamp(true);
+
+  var xMin=x(min),
+      xMax=x(max)
+
+  var svg = d3.select(".search-filters").append("svg")
+    .attr('width', width+30)
+    .attr('height', 50);
+
+
+  var slider = svg.append("g")
+      .attr("class", "slider")
+      .attr("transform", "translate(5,20)");
+
+  slider.append("line")
+      .attr("class", "track")
+      .attr("x1", max+x.range()[0])
+      .attr("x2", max+x.range()[1])
+
+  var selRange = slider.append("line")
+      .attr("class", "sel-range")
+      .attr("x1", max+x(sliderVals[0]))
+      .attr("x2", max+x(sliderVals[1]))
+
+  slider.insert("g", ".track-overlay")
+      .attr("class", "ticks")
+      .attr("transform", "translate(10,24)")
+    .selectAll("text")
+    .data(x.ticks(10))
+    .enter().append("text")
+      .attr("x", x)
+      .attr("text-anchor", "middle")
+      .style("font-weight", "bold")
+      .text(function(d) { return d; });
+
+  var handle = slider.selectAll("rect")
+    .data([0, 1])
+    .enter().append("rect", ".track-overlay")
+      .attr("class", "handle")
+      .attr("y", -8)
+      .attr("x", function(d) { return x(sliderVals[d]); })
+      .attr("rx", 3)
+      .attr("height", 16)
+      .attr("width", 20)
+      .on("mouseup", function(){console.log("mouseup");})
+      .call(
+          d3.drag()
+            .on("start", startDrag)
+            .on("drag", drag)
+            .on("end", endDrag)
+      );
+
+  function startDrag(){
+    d3.select(this).raise().classed("active", true);
+  }
+
+  function drag(d){
+    var x1=d3.event.x;
+    if(x1>xMax){
+      x1=xMax
+    }else if(x1<xMin){
+      x1=xMin
+    }
+    d3.select(this).attr("x", x1);
+    var x2=x(sliderVals[d==0?1:0])
+    selRange
+        .attr("x1", max+x1)
+        .attr("x2", max+x2)
+  }
+
+
+  function endDrag(d, data){
+    var v=x.invert(d3.event.x)
+    var elem=d3.select(this)
+    sliderVals[d] = v
+    var v1=Math.min(sliderVals[0], sliderVals[1]),
+        v2=Math.max(sliderVals[0], sliderVals[1]);
+    elem.classed("active", false)
+      .attr("x", x(v));
+    selRange
+        .attr("x1", max+x(v1))
+        .attr("x2", max+x(v2))
+  }
+
+}
+function loadButtons(data){
+  var search = d3.select("div#college-search");
+
+  var div = search.append("div")
+  .attr("class", "description")
+  div.append("button")
+  .attr("class", "btn btn-primary")
+  .on("click", function() { loadList(sort_and_filter(data).slice(0, 50)) })
+  .text("Colleges with The Most Women")
+
+  var div = search.append("div")
+  .attr("class", "description")
+  div.append("button")
+  .attr("class", "btn btn-primary")
+  .on("click", function() { loadList(sort_and_filter2(data).slice(0, 50)) })
+  .text("Colleges with Most Minorities")
+}
+
+function loadFilters(data){
+  var search = d3.select("div#college-search");
+
+  var filters = search.append("div")
+  .attr("class", "search-filters");
+
+  var slider_width = 400
+  var filters_svg = d3.select(".search-filters").append("svg")
+    .attr('width', slider_width+30)
+    .attr('height', 50);
+
+  addFilter(data, 2, 40);
+}
+function loadList(data){
+  console.log(data);
+  var search = d3.select("div#college-search");
+
+  search.selectAll("div.college").remove();
+  var colleges = search.selectAll("div.college")
+  .data(data)
+  .enter().append("div")
+  .attr("class", "college card");
+
+  colleges.append("img")
+  .attr("onerror", "this.src = '//logo.clearbit.com/cornell.edu?size=150';")
+  .attr("class", "card-img-top")
+  .attr("src", function(d, i) {
+    var src;
+    src = "//logo.clearbit.com/" + d.Insturl + "?size=150";
+    return src;
+  })
+  .attr("alt", function(d, i) { return d.InstitutionName; });
+
+  body = colleges.append("div")
+  .attr("class", "card-body")
+
+  body.append("h4")
+  .attr("class", "card-title")
+  .html(function(d, i) { return d.InstitutionName; })
+
+  body.append("p")
+  .attr("class", "card-title")
+  .html(function(d, i) { return "% of Undergraduate Women: "+ d.UgdsWomen* 100; })
+
+  body.append("p")
+  .attr("class", "card-title")
+  .html(function(d, i) { return "% of Minority Students: "+ (1-d.UgdsWhite)* 100; })
+
+  body.append("a")
+  .attr("class", "btn btn-primary")
+  .attr("href", function(d, i) { return "https://" + d.Insturl; })
+  .text("See college website")
+
+}
+    //var search = d3.select("div#college-search");
+    /*
+    function reSort() {
+      search.selectAll("div.college-list").sort(function(a, b) {
+        return d3.ascending(Math.random(), Math.random());
+      })
+      .transition().duration(500)
+      .style({
+        top: function(d, i) {
+          return 60 + ((i*30)) + "px";
+        }
+      })
+    }
+
+    */
+    //d3.select(".resort").on("click", reSort);
+
+
+
+  }); //end of document.ready
+  </script>
+
+</body>
+</html>

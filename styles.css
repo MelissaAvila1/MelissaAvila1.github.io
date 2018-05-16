@@ -1,0 +1,314 @@
+.details_Name {
+    height: 20px;
+}
+
+.brushed {
+    fill: #ff3399;
+    stroke: white;
+    opacity: 1.0;
+}
+
+.non_brushed {
+    fill: #404040;
+    opacity: 0.5;
+}
+
+
+/*
+.axis text {
+    fill: red;
+    font: .5em;
+}*/
+
+.opposite_brush {
+    fill: #ff3399;
+    stroke: #8e1b54;
+    opacity: 1.0;
+}
+
+#scatterA {
+    width: 45%;
+    display: inline-block;
+    margin-right: 1%;
+    margin-left: 1%;
+}
+
+#scatterB {
+    width: 45%;
+    display: inline-block;
+    margin-right: 1%;
+}
+
+.scatter_plots {
+    text-align: center;
+}
+
+.scatter_dropdowns {
+    margin-bottom: .5em;
+}
+
+.regression {
+    stroke-width: 2px;
+    stroke: steelblue;
+    stroke-dasharray: 10, 5;
+}
+
+.textSub {
+    font-size: 10px;
+}
+
+.svg_scatter_A {
+    text-align: left;
+    width: 40%;
+    display: inline-block;
+    font-size: .8em;
+}
+
+.button_name {
+    font-size: .8em;
+}
+
+.dropdown {
+    display: inline-block;
+}
+
+.svg_scatter_B {
+    text-align: left;
+    width: 40%;
+    display: inline-block;
+    font-size: .8em;
+    margin-left: 15%;
+}
+
+.non_disp {
+    display: none;
+}
+
+#title {
+    font-family: 'Nanum Gothic Coding', monospace;
+    text-align: center;
+    font-weight: bold;
+    margin-top: .5em;
+}
+
+#tagline {
+    font-style: italic;
+    margin-top: 1.5em;
+    width: 80%;
+    text-align: center;
+    margin: 0 auto;
+}
+
+#container {
+    width: 100%;
+    text-align: center;
+}
+
+.sub-text {
+    font-family: helvetica;
+    text-align: left;
+    margin-top: 1em;
+}
+
+.sub-title {
+    font-family: 'Nanum Gothic Coding', monospace;
+    font-weight: bold;
+    text-align: left;
+    font-size: 2em;
+}
+
+.description {
+    margin-top: 1em;
+    margin-bottom: 3em;
+}
+
+
+/*.dropright{
+			height: 20px;
+		}*/
+
+.btn-secondary {
+    background-color: transparent;
+    color: black;
+    border-top-color: transparent;
+    border-left-color: transparent;
+    border-right-color: transparent;
+}
+
+.btn-secondary:hover {
+    background-color: #eef7fa;
+    color: black;
+}
+
+.form-check-label {
+    font-size: .7em;
+}
+
+.form-check {
+    margin-bottom: 1em;
+}
+
+.active-button {
+    background-color: lightblue;
+}
+
+.d3-tip {
+    line-height: 1;
+    font-weight: bold;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    border-radius: 2px;
+}
+
+.nonActiveText {
+    display: none;
+}
+
+
+/* Creates a small triangle extender for the tooltip */
+
+.d3-tip:after {
+    box-sizing: border-box;
+    display: inline;
+    font-size: 10px;
+    width: 100%;
+    line-height: 1;
+    color: rgba(0, 0, 0, 0.8);
+    content: "\25BC";
+    position: absolute;
+    text-align: center;
+}
+
+
+/* Style northward tooltips differently */
+
+.d3-tip.n:after {
+    margin: -1px 0 0 0;
+    top: 100%;
+    left: 0;
+}
+
+
+/*** BUBBLE CHART STYLING ***/
+
+#bubble-chart {
+    /*margin: 30px;*/
+}
+
+#bubble-chart > .axis path,
+#bubble-chart > .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+
+#bubble-chart text {
+    font-size: 0.7rem;
+}
+
+.tick line {
+    visibility: hidden;
+}
+
+#bubble-chart path.domain {
+    stroke: none;
+}
+
+.tooltip {
+    position: absolute;
+    width: 250px;
+    height: 80px;
+    pointer-events: none;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+#bubble-chart-filters {
+    display: flex;
+    justify-content: center;
+    /*width: 50%;*/
+}
+
+#bubble-chart-container{
+  background: #F3F3F3;
+}
+
+.button {
+    border: 1px solid gray;
+    border-radius: 20px;
+    padding: 10px;
+    margin: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.active {
+    background-color: gray;
+    color: white;
+}
+
+#showData {
+    visibility: hidden;
+    margin-top: 20px;
+}
+
+#main {
+    visibility: hidden;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #333333;
+}
+
+
+/* Add shadow effect to chart. If you don't like it, get rid of it. */
+
+svg {
+    -webkit-filter: drop-shadow( 0px 3px 3px rgba(0, 0, 0, .3));
+    filter: drop-shadow( 0px 3px 3px rgba(0, 0, 0, .25));
+}
+
+
+/*Styling for the lines connecting the labels to the slices*/
+
+polyline {
+    opacity: .3;
+    stroke: black;
+    stroke-width: 2px;
+    fill: none;
+}
+
+
+/* Make the percentage on the text labels bold*/
+
+.labelName tspan {
+    font-style: normal;
+    font-weight: 700;
+}
+
+#brushed-svg-detail {
+    display: inline-block;
+    text-align: center;
+}
+
+#brushed-svg-detail div {
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 40px;
+}
+
+.brushedSVG {
+  display: inline-block;
+  text-align: center;
+  float: left;
+  height: 50%;
+}
+
+
+#texty {
+    font-size: 28px;
+}

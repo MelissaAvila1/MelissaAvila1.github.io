@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <title>Final Project INFO 4310</title>
+  <meta name="description" content="Final Project 4310">
+  <meta name="author" content="College Kidz">
+  <meta content="en" http-equiv="Content-Language">
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.13.0/d3.js"></script>
+
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.bundle.min.js" integrity="sha384-lZmvU/TzxoIQIOD9yQDEpvxp6wEU32Fy0ckUgOH4EIlMOCdR823rg4+3gWRwnX1M" crossorigin="anonymous"></script>
+  <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/popper.min.js" type="text/javascript"></script>-->
+
+  <script type="text/javascript" src="scatterplots.js" defer></script>
+  <script src="bubblechart_script.js" defer></script>
+  <script src="index.js"></script>
+
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Carrois+Gothic+SC" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">
+
+</head>
+
+<body>
+  <div id="container">
+    <h1 id="title">Barriers to Education</h1>
+    <p id="tagline">A discussion and exploration on the issues and consequences surrounding college attainment in the United States.</p>
+    <hr>
+
+    <div id='scatterplot-container' class="description">
+      <div class="sub-title">A Stark Reality</div>
+      <div class="sub-text">
+        United States Census data shows that while more that 37% of white (non-hispanic) Americans have a college degree, that percentage drops down to 23% for African Americans and only 16.4% for Hispanic Americans. While more young Americans than ever are attaining a college degree, there still exists a stark contrast between different minority and socio-economic groups in the attainment of a formal college education. In the following visualizations we seek to explore the extent of this issue as well as discuss why college remains unattainable for many Americans. This article primarily explores the themes of accessibility, diversity, affordability, and education quality and their effects on graduation and college completion.
+        <br/>
+        <br/>The following data comes from the National Center for Education Statistics (NCES) database (<a href="#citation1">citation 1</a>) and the U.S. Department of Education's annual College Scorecard Data (<a href="#citation2">citation 2</a>). As data from the year 2015 has the most complete information, most if not all of the data used in the following visualizations will be from 2015. Data was filtered to include only 4-year private and public institutions with more than a thousand undergratuate students in the United States.
+      </div>
+      <div class="sub-title">Exploring the Problem</div>
+      <div class="sub-text">
+        Differences in college attainment and achievement between minoritiy, white, low-income, and high-income students is not a new issue. However, racial and socio-economic background alone only partly account for the complex reasons behind the lack of national college attainment. Rather it is the interaction between these factors as well as other institutionally related aspects like admission rate, faculty salary, endowment, and tuition cost which influence whether young people attend college.
+        <br/>
+        <br/>The visualization below will be discussed in the following paragraph, but exploration of different axes values is encouraged. Each point represents a 4-year U.S. university. Points can be brushed in either chart and the corresponding values will be highlighted in the opposite chart. Clicking a point will open another chart with school-specific information.
+      </div>
+
+      <div class="scatter_plots">
+        <div class="scatter_dropdowns">
+          <div class="svg_scatter_A">
+            Show Me
+            <div class="dropdown">
+              <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="button_name a-button"></span>
+                </button>
+                <div class="dropdown-menu a-menu" aria-labelledby="dropdownMenuButton"></div>
+              </div>
+            </div>
+            <!-- end of class dropdown -->
+            on the X axis and
+            <div class="dropdown">
+              <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="button_name b-button"></span>
+                </button>
+                <div class="dropdown-menu b-menu" aria-labelledby="dropdownMenuButton"></div>
+              </div>
+            </div>
+            <!-- end of class dropdown -->
+            on the Y axis
+          </div>
+          <!-- end of svg_scatter_A -->
+          <div class="svg_scatter_B">
+            Show Me
+            <div class="dropdown">
+              <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="button_name c-button"></span>
+                </button>
+                <div class="dropdown-menu c-menu" aria-labelledby="dropdownMenuButton"> </div>
+              </div>
+            </div>
+            <!-- end of class dropdown -->
+            on the X axis and
+            <div class="dropdown">
+              <div class="btn-group dropright">
+                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="button_name d-button"></span>
+                </button>
+                <div class="dropdown-menu d-menu" aria-labelledby="dropdownMenuButton"></div>
+              </div>
+            </div>
+            <!-- end of class dropdown -->
+            on the Y axis
+          </div>
+          <!-- end of svg_scatter_A -->
+        </div>
+        <!-- end of class scatter_dropdowns -->
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="checkRanked" checked>
+          <label class="form-check-label" for="checkRanked">Show only Nationally Ranked Schools</label>
+        </div>
+        <div class="alert alert-warning non_disp alert-dismissible fade show" role="alert">
+          Warning: Due to incomplete data, non-ranked schools may show missing/skewed data for axes relating to ranking, financial aid, and education quality.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+        </div>
+        <div class="scatter_svgs">
+          <div class="details_Name"></div>
+          <div id="scatterA"></div>
+          <div id="scatterB"></div>
+          <div class="scatter_figures">
+            <button type="button" class="btn btn-light figA active-button">Figure A</button>
+            <button type="button" class="btn btn-light figB">Figure B</button>
+            <button type="button" class="btn btn-light figC">Figure C</button>
+            <button type="button" class="btn btn-light figD">Figure D</button>
+          </div>
+          <button type="button" class="btn btn-info" id="showData">Show Brushed Data</button>
+        </div>
+        <!-- end of scatter_svgs -->
+        <div id="brushed-svg-detail">
+          <div id="brushedSVG" class='brushedSVG'>
+          </div>
+          <!-- end of brushedSVG -->
+          <div id="brushedSVG2" class='brushedSVG'>
+          </div>
+        </div>
+
+        <!-- end of brushedSVG2 -->
+      </div>
+      <!-- end of class scatter_plots -->
+
+      <div id='scatterplot-description' class="description">
+        <div class="sub-text figAtext ">
+          The NCES and College Scorecard data revealed several interesting trends relating to university diversity and completion. The first of these find is how university elitism and exclusivity has resulted in relatively small study body diversity when compared to schools with higher admission rates. The second scatter plot in Figure A shows how university admission rates under 40% have significantly proportions of minorities (and and smaller spread) than universities in the 40% to 80% range. The NY times reports that, even with affirmative action, black and hispanic students are more underrepresented in elite universities than they were 35 years ago (<a href="#citation3">citation 3</a>). While there have been increases in the number of hispanic students attending school, the gap between hispanic students and college-age Hispanic adults has widened since 1980. However, this problem regarding minority acceptance into elite universities stems not simply from issues of equality in admissions consideration, but rather long-standing issues regarding the environments these minority students grow up in (underfunded schools with low quality instruction). Thus, whether the lack of diversity is a result of racial biases in the admissions process or the proportion of college-ready minorities with quality education is still uncertain, but it is likely a culmination of both issues.
+        </div>
+        <div class="sub-text figBtext nonActiveText">
+          It's no surprise that higher quality faculty are better paid. What is surprising is the extent to which university endowment correlates with quality of education.
+          <button type="button" class="btn figBspan btn-link">Figure B </button>is demonstrating how remarably disadvantaged universities with low endowment suffer in terms of the quality of their faculty. In turn,
+          <button type="button" class="btn figCspan btn-link">Figure C</button> shows how quality of faculty is positively correlated with quality of education, and quality of education is positively correlated with alumni employment rankings. Thus, schools with low endowments are limited in terms of the educational opportunities they can provide their students. Thus this begins a vicious cycle where students who come from low endowment schools become alumni with less job opportunities and thus less finanical resources to donate back to their schools.
+        </div>
+        <div class="sub-text figCtext nonActiveText">
+          It's no surprise that higher quality faculty are better paid. What is surprising is the extent to which university endowment correlates with quality of education. Figure B is demonstrating how remarakbly disadvantaged universities with low endowment are in terms of the quality of their faculty. In turn,
+          <button type="button" class="btn figCspan btn-link">Figure C</button> shows how quality of faculty is positively correlated with quality of education, and quality of education is positively correlated with alumni employment rankings. Thus, schools with low endowments (and, as
+          <button type="button" class="btn figDspan btn-link">Figure D</button> will show, dependent on more federal aid) are limited in terms of the educational opportunities they can provide their students. Thus this begins a vicious cycle where students who come from low endowment (but high federal aid) schools become alumni with less job opportunities and thus less finanical resources to donate back to their schools.
+        </div>
+        <div class="sub-text figDtext nonActiveText">
+          Figure D reinforces the educational disparities that students who rely on federal grants to complete their education must face. The NCES found that in 2011-12, the average median family income was below $26,100, adjusted for inflation (<a href="#citation4">citation 4</a>). Indicating that schools with the lowest endowments have the greatest proportion of low income students and these schools also largely depend on federal aid. Consequently, students in lower-income brackets have less access to higher quality education and more severely limited in theri post-graduation job options.
+        </div>
+        <div class="sub-text figEtext nonActiveText">
+          Figure E text
+        </div>
+      </div>
+
+
+    </div>
+
+
+      <!-- BUBBLE CHART CODE -->
+        <div id='bubble-chart-container' class="description">
+          <div class="sub-title">Income vs College Completion</div>
+          <div class="sub-text">
+            The visualization below takes a closer look at first year college completion rates of universities versus the average family income of students at each university, and comparing the results between public/private universities among different ethnicities of students. In general, you see that private schools tend to have a much higher first year completion rate for all three income brackets. Furthermore, the higher the income bracket, the higher the completion rate. It appears there’s an advantage for higher income students to attending private schools and completing them successfully. Looking at other ethnicities, you see that White students generally have a higher completion rate than Black students. This could suggest that it may not be that schools are biased towards admitting White students, but more so that lower incomes become a natural barrier to entering and completing a school.
+          </div>
+
+          <div id="bubble-chart-filters">
+            <div id="all" class="button active">All</div>
+            <div id="white" class="button">White</div>
+            <div id="black" class="button">Black</div>
+            <div id="hispanic" class="button">Hispanic</div>
+            <div id="asian" class="button">Asian</div>
+            <div id="aian" class="button">American Indian/Alaska Native</div>
+            <div id="nhpi" class="button">Native Hawaiian/Pacific Islander</div>
+          </div>
+          <div id="bubble-chart"></div>
+      </div>
+
+        <iframe src="school_list.html" height="700" width="100%"></iframe>
+
+
+        <!-- CITATIONS code -->
+        <div id='citations-container' class="description">
+          <div class="sub-title">Citations</div>
+          <div class="sub-text">
+            <ol>
+              <li id="citation1"><a href="https://collegescorecard.ed.gov/data/">https://collegescorecard.ed.gov/data/</a></li>
+              <li id="citation2"><a href="https://nces.ed.gov/">https://nces.ed.gov/</a></li>
+              <li id="citation3"> <a href="https://www.nytimes.com/interactive/2017/08/24/us/affirmative-action.html">https://www.nytimes.com/interactive/2017/08/24/us/affirmative-action.html</a></li>
+              <li id="citation4"><a href="https://nces.ed.gov/datapoints/2016407.asp">https://nces.ed.gov/datapoints/2016407.asp</a></li>
+            </ol>
+          </div>
+        </div>
+
+
+      </div>
+
+
+    </div>
+    <!-- end of container div -->
+  </body>
+
+  </html>
